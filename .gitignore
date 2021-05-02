@@ -1,2 +1,8 @@
 .terraform.lock.hcl
 .terraform/
+ansible/roles/
+.terraform.tfstate.lock.info
+terraform.tfstate
+.ssh/demo-ssh-key.pem
+ansible/inventory.yml
+ansible/playbook.yml
