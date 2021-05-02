@@ -1,0 +1,8 @@
+---
+- name: nginx_role
+  src: https://github.com/mbalto2013/nginx.git
+  version: master
+
+- name: apache_ab_role
+  src: https://github.com/mbalto2013/apache-ab.git
+  version: master  

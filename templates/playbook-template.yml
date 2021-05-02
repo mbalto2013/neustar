@@ -1,0 +1,33 @@
+---
+- hosts: ${nginx_server_info}
+  gather_facts: no
+  pre_tasks:
+    - wait_for_connection:
+      timeout: 300
+  become: yes
+  tags: [${nginx_server_info},install]
+  roles:
+     - nginx_role
+
+- hosts: ${ab_server_info}
+  gather_facts: no
+  pre_tasks:
+    - wait_for_connection:
+  become: yes
+  tags: [${ab_server_info}, install]
+  roles:
+     - apache_ab_role
+
+- hosts: ab-server
+  gather_facts: no
+  become: yes
+  tags: ab-test
+  tasks:
+    - name: Execute ab test
+      ansible.builtin.shell:
+        cmd: ab -n 150 -c 10 http://${nginx_server_ip}:80/
+      register: ab_results
+
+    - name: Print ab test results
+      ansible.builtin.debug:
+        msg: "{{ab_results.stdout_lines}}"
